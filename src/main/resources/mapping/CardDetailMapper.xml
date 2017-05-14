@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ssm.dao.CardDetailDao">
+
+    <resultMap id="CardDetailBaseMap" type="ssm.model.CardDetail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="imageUrl" property="imageUrl" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="infoId" property="infoId" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectAllCardDetailByType" parameterType="java.lang.String" resultMap="CardDetailBaseMap">
+        SELECT * FROM t_detail
+        WHERE type = #{type}
+    </select>
+
+    <delete id="deleteCardDetailById" parameterType="java.lang.Long" >
+        DELETE FROM t_detail
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="insertCardDetail" parameterType="ssm.model.CardDetail">
+        INSERT INTO
+		t_detail(imageUrl,description,type,content,infoId,date)
+		VALUES
+		(#{cardDetail.imageUrl},#{cardDetail.description},#{cardDetail.type},#{cardDetail.content},#{cardDetail.infoId},#{cardDetail.date})
+    </insert>
+
+    <update id="updateCardDetail" parameterType="ssm.model.CardDetail">
+        UPDATE t_detail
+		SET
+		imageUrl = #{cardDetail.imageUrl},
+		description = #{cardDetail.description},
+		type = #{cardDetail.type},
+		content = #{cardDetail.content},
+		infoId = #{cardDetail.infoId},
+		date = #{cardDetail.date}
+		WHERE id = #{cardDetail.id}
+    </update>
+</mapper>
